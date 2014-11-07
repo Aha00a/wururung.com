@@ -1,28 +1,172 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
+ %{
+    def arrayMember = ["kig1945", "aha00a", "Kang Ill Goo", "AlanthePanda", "ReNeGaDe_", "kkoala", "세츠나", "silsol", "sinipapa", "독고클래쉬", "dontdry", "netro", "Ahn_air", "daypark", "Temeraire", "떼제비", "팜체크", "JunY", "aha00b", "_rEnE_"];
+    def arrayEnemy = ["gettysburg", "tgrubb5", "mighty warrior", "Al18ex1888", "ZaZ187", "attaker", "Tomad", "Nadan", "chief cris", "blackhammer", "graytlo91", "ViditRoks", "elliot", "Alex23", "Jadin", "Cowboy", "wa y n gong", "xhx hassoun", "fariy", "ho"]
+    def dicMember = [:];
+    for(def i = 0; i < arrayMember.size(); i++) { dicMember.put(arrayMember[i], i); }
+    def dicEnemy = [:];
+    for(def i = 0; i < arrayMember.size(); i++) { dicEnemy.put(arrayEnemy[i], i); }
+    def arrayWarEvent = [
+        ["a", "aha00b", "fariy", 57, 1, 1],
+        ["a", "silsol", "Nadan", 100, 3, 3],
+        ["a", "Temeraire", "Jadin", 100, 3, 3],
+        ["a", "kig1945", "gettysburg", 75, 1, 1],
+        ["a", "팜체크", "ho", 64, 2, 2],
+        ["a", "daypark", "Alex23", 100, 3, 3],
+        ["a", "떼제비", "Cowboy", 99, 2, 2],
+        ["a", "Kang Ill Goo", "mighty warrior", 82, 2, 2],
+        ["a", "aha00b", "ho", 100, 3, 1],
+        ["a", "_rEnE_", "fariy", 15, 0, 0],
+        ["d", "_rEnE_", "ho", 10, 0, 0],
+        ["d", "JunY", "ho", 0, 0, 0],
+        ["a", "sinipapa", "chief cris", 97, 2, 2],
+        ["a", "팜체크", "xhx hassoun", 43, 1, 1],
+        ["a", "Temeraire", "ZaZ187", 100, 3, 3],
+        ["a", "Kang Ill Goo", "tgrubb5", 100, 3, 3],
+        ["a", "kig1945", "Al18ex1888", 100, 3, 3],
+        ["a", "kkoala", "attaker", 64, 1, 1],
+        ["a", "netro", "ViditRoks", 100, 3, 3],
+        ["a", "_rEnE_", "xhx hassoun", 56, 1, 0],
+        ["a", "ReNeGaDe_", "Tomad", 100, 3, 3],
+        ["a", "sinipapa", "graytlo91", 100, 3, 3],
+        ["a", "JunY", "fariy", 40, 0, 0],
+        ["d", "sinipapa", "ZaZ187", 38, 0, 0],
+        ["a", "aha00a", "gettysburg", 100, 3, 2],
+        ["a", "dontdry", "elliot", 100, 3, 3],
+        ["a", "JunY", "xhx hassoun", 64, 2, 1],
+        ["a", "독고클래쉬", "blackhammer", 100, 3, 3],
+        ["d", "떼제비", "tgrubb5", 100, 3, 3],
+        ["a", "ReNeGaDe_", "attaker", 100, 3, 2],
+        ["a", "AlanthePanda", "chief cris", 57, 1, 0],
+        ["a", "AlanthePanda", "mighty warrior", 38, 0, 0],
+        ["d", "Temeraire", "xhx hassoun", 54, 1, 1],
+        ["d", "silsol", "xhx hassoun", 23, 0, 0],
+        ["a", "silsol", "chief cris", 100, 3, 1],
+        ["a", "독고클래쉬", "wa y n gong", 100, 3, 3],
+        ["a", "netro", "Cowboy", 100, 3, 1],
+        ["a", "Ahn_air", "fariy", 78, 1, 0],
+        ["a", "daypark", "xhx hassoun", 100, 3, 1],
+        ["a", "떼제비", "fariy", 100, 3, 2],
+        ["a", "Ahn_air", "Cowboy", 93, 2, 0],
+        ["a", "aha00a", "mighty warrior", 100, 3, 1],
+        ["a", "세츠나", "gettysburg", 37, 0, 0],
+        ["a", "세츠나", "ViditRoks", 73, 2, 0],
+    ];
+    def height = 40;
+}%
+#{set 'moreHead'}
+<script type="text/javascript">
+    // By Chris Coyier & tweaked by Mathias Bynens
+
+    $(function() {
+
+        // Find all YouTube videos
+        var $allVideos = $("iframe[src^='//www.youtube.com']"),
+
+        // The element that is fluid width
+                $fluidEl = $(".container");
+
+        // Figure out and save aspect ratio for each video
+        $allVideos.each(function() {
+
+            $(this)
+                    .data('aspectRatio', this.height / this.width)
+
+                // and remove the hard coded width/height
+                    .removeAttr('height')
+                    .removeAttr('width');
+
+        });
+
+        // When the window is resized
+        // (You'll probably want to debounce this)
+        $(window).resize(function() {
+
+
+            // Resize all videos according to their own aspect ratio
+            $allVideos.each(function() {
+
+                var $el = $(this);
+                var newWidth = $(this).parent().width();
+                $el
+                        .width(newWidth)
+                        .height(newWidth * $el.data('aspectRatio'));
+
+            });
+
+            // Kick off one resize to fix all videos on page load
+        }).resize();
+
+        var until = 0;
+        setInterval(function() {
+            until++;
+            if(until > ${arrayWarEvent.size()} + 10)
+                until = 0;
+
+            animateWarLine(until);
+        }, 1000);
+
+    });
+
+    function animateWarLine(until) {
+        for (var i = 0; i < ${arrayWarEvent.size()}; i++) {
+            if(i < until)
+            {
+                $(".warLine" + i).show();                        
+            }
+            else 
+            {
+                $(".warLine" + i).hide();                        
+            }
+
+        };
+    };
+
+</script>
+#{/set}
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">wururung</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            *{<form class="navbar-form navbar-right" role="form">}*
+                *{<div class="form-group">}*
+                    *{<input type="text" placeholder="Email" class="form-control">}*
+                *{</div>}*
+                *{<div class="form-group">}*
+                    *{<input type="password" placeholder="Password" class="form-control">}*
+                *{</div>}*
+                *{<button type="submit" class="btn btn-success">Sign in</button>}*
+            *{</form>}*
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+
+<div class="jumbotron">
+    <div class="container">
+        <img src="http://supercell-www-content.s3.amazonaws.com/http://supercell-www-content.s3-website-us-east-1.amazonaws.com/201401/cache/images/made/b136aec39c9210cd/clash_of_clans_logo_600_270.png" style="height: 100px; float: right;"/>
+        <h2>wururung</h2>
+        <p>
+            함께 즐긴 시간들의 기록입니다.
+        </p>
+    </div>
+</div>
+<div class="whiteAlpha">
+
 <div class="container" style="padding: 10px;">
     <div style="">
 
     </div>
-    <h1>wururung!</h1>
-    <ul>
-        <li>
-            안녕하세요, wururung입니다.
-        </li>
-        <li >
-            Contact:
-            <a href="http://facebook.com/aha00a">
-                <img style="width: 16px; height: 16px; vertical-align: middle;" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xaf1/v/t1.0-1/c12.12.155.155/576889_449528545089056_951742509_n.jpg?oh=30c8be2776e4c1b051b84c63c4e118ab&oe=54EC28AE&__gda__=1425594912_c0022cd343e150b1199404c85e54fad0"/>
-                Aha00a
-            </a>
-        </li>
-    </ul>
-    <hr/>
-    <h2>
-        <img src="http://supercell-www-content.s3.amazonaws.com/http://supercell-www-content.s3-website-us-east-1.amazonaws.com/201401/cache/images/made/b136aec39c9210cd/clash_of_clans_logo_600_270.png" style="height: 200px; float: right;"/>
-        CLASH of CLANS
-    </h2>
     <h3>Rules</h3>
     <ul>
         <li>
@@ -49,8 +193,7 @@
         <li>자원 저장소(Storage), 훈련소(Barrack), 암흑훈련소(Dark Barrack)는 필요에 따라</li>
     </ol>
 
-    <h3>Clan War</h3>
-    <h4>Guide</h4>
+    <h3>Clan Wars</h3>
     <ul>
         <li>새로 추가된 건물들이 있을 수 있으니 War Base를 꼭 점검해 주세요.</li>
         <li>War Map에서 Town Hall과 Clan Castle은 가장 안전한 위치에 두세요.</li>
@@ -62,36 +205,151 @@
         <li>드래곤은 다른 유닛과 섞는 것 보다 드래곤만 뽑아서 공격하는게 낫습니다.</li>
     </ul>
 
+    <h3>Clan War History</h3>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <div class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        12차전(2014-11-05) - 勝(60:04) - Chronicle
+                    </a>
+                </div>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <h4 style="text-align: center;">War Events</h4>
+                    <p style="text-align: center;">
+                        파란색은 공격, 붉은색은 방어, 굵기는 별 획득수, 투명도는 파괴율입니다.
+                    </p>
 
-    <h4>12차전(2014-11-05) - Chronicle</h4>
-    <div>
-        <ul>
-            <li>
-                참가자
-                <ul>
-                    <li>kig1945, aha00a, Kang Ill Goo, AlanthePanda, ReNeGaDe_</li>
-                    <li>kkoala, 세츠나, silsol, sinipapa, 독고클래쉬</li>
-                    <li>dontdry, netro, Ahn_air, daypark, Temeraire</li>
-                    <li>떼제비, 팜체크, JunY, aha00b, _rEnE_</li>
+                    <span id="scoreMember">
+                    </span>
 
-                </ul>
-            </li>
-            <li>Most Heroic Attack</li>
-            <li>Most Heroic Defense</li>
-        </ul>
+                    <span id="scoreEnemy">
+                    </span>
+                    <svg width="100%" style="" preserveAspectRatio= "xMinYMin meet" viewBox="0 0 800 ${(arrayMember.size() + 1) * height}">
+                        #{list 0..arrayMember.size()-1}
+                            <text x="200" y="${(_ + 1) * height}" fill="#55f" text-anchor="end" class="coc">
+                                ${arrayMember[_]}
+                            </text>
+                        #{/list}
+                        #{list 0..arrayEnemy.size()-1}
+                            <text x="600" y="${(_ + 1) * height}" fill="#f55" class="coc">
+                                ${arrayEnemy[_]}
+                            </text>
+                        #{/list}
+                        #{list 0..arrayWarEvent.size()-1}
+                            <line marker-end="url(#triangleEnd)"
+                                class="warLine${_}"
+                                x1="230" y1="${dicMember[arrayWarEvent[_][1]] * height + 35}" 
+                                x2="570" y2="${dicEnemy[arrayWarEvent[_][2]] * height + 35}" 
+                                style="stroke:${arrayWarEvent[_][0] == "a" ? "#00f" : "#f00"}; stroke-width: ${(arrayWarEvent[_][4] + 1) * 2}px; opacity: ${((arrayWarEvent[_][3] + 20) / 200)};" 
+                                data-scoreGained=""
+                                />
+                        #{/list}
+
+                    </svg>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 style="text-align: center;">Most Heroic Attack</h4>
+                            <h5 style="text-align: center;">Temeraire vs ZaZ187</h5>
+
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/n9hLIN6Nn_0" frameborder="0" allowfullscreen></iframe>
+
+                        </div>
+                        <div class="col-md-12">
+                            <h4 style="text-align: center;">Most Heroic Defense</h4>
+                            <h5 style="text-align: center;">ZaZ187 vs sinipapa</h5>
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/nM9LY2cajcs" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div style="height: 50px;"> </div>
+                        <h4 style="text-align: center;">Featured Battles</h4>
+                        <div class="col-md-6">
+                            <h5 style="text-align: center;">xhx hassoun vs silsol</h5>
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/T9WVotT6Gdk" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 style="text-align: center;">sinipapa vs graytlo91</h5>
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/UEHmYu3xVo8" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 style="text-align: center;">aha00a vs gettysburg</h5>
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/eCmwfZ9jQh0" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 style="text-align: center;">aha00a vs mighty warrior</h5>
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/h4oFpRKOWMI" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 style="text-align: center;">kig1945 vs Al18ex1888</h5>
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/1Na4kB77Vcw" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 style="text-align: center;">Kang Ill Goo vs tgrubb5</h5>
+                            <iframe width="1280" height="800" src="//www.youtube.com/embed/ssnwso4R7nc" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        %{
+            def listHistory = [
+                "11차전(2014-10-20) - 勝(64:59) - iran sky",
+                "10차전(2014-10-13) - 勝(65:64) - Natsoe Empire",
+                "09차전(2014-10-06) - 敗(62:64) - 沙漠之狐",
+                "08차전(2014-09-29) - 勝(72:26) - ZHUMABAI CLANS",
+                "07차전(2014-09-22) - 勝(70:07) - Winston Rules",
+                "06차전(2014-09-15) - 勝(55:25) - T1rd Burglers",
+                "05차전(2014-09-08) - 勝(41:15) - SuperNova",
+                "04차전(2014-09-01) - 勝(25:12) - 湖里JW",
+                "03차전(2014-08-25) - 勝(29:21) - clan Tu Do",
+                "02차전(2014-08-18) - 勝(27:12) - TURK'S TEAM",
+                "01차전(2014-08-11) - 敗(??:??) - ???"
+            ];
+        }%
+        #{list 0..listHistory.size() - 1}
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading${_}">
+                    <div class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse${_}" aria-expanded="false" aria-controls="collapse${_}">
+                            ${listHistory[_]}
+                        </a>
+                    </div>
+                </div>
+                <div id="collapse${_}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${_}">
+                    <div class="panel-body">
+                        기록이 소실되었습니다.
+                    </div>
+                </div>
+            </div>
+        #{/list}
     </div>
-    <h4>11차전(2014-10-20) - 勝(64:59) - iran sky</h4>
-    <h4>10차전(2014-10-13) - 勝(65:64) - Natsoe Empire</h4>
-    <h4>09차전(2014-10-06) - 敗(62:64) - 沙漠之狐</h4>
-    <h4>08차전(2014-09-29) - 勝(72:26) - ZHUMABAI CLANS</h4>
-    <h4>07차전(2014-09-22) - 勝(70:07) - Winston Rules</h4>
-    <h4>06차전(2014-09-15) - 勝(55:25) - T1rd Burglers</h4>
-    <h4>05차전(2014-09-08) - 勝(41:15) - SuperNova</h4>
-    <h4>04차전(2014-09-01) - 勝(25:12) - 湖里JW</h4>
-    <h4>03차전(2014-08-25) - 勝(29:21) - clan Tu Do</h4>
-    <h4>02차전(2014-08-18) - 勝(27:12) - TURK'S TEAM</h4>
-    <h4>01차전(2014-08-11) - 敗(??:??) - ???</h4>
 
+    <h3>Replay</h3>
+    %{
+        def listReplay = [
+            ["라바하운드 2", "//www.youtube.com/embed/2oYAj7tMFkQ"],
+            ["그냥 폭탄도 뭉치면 강해요^^", "//www.youtube.com/embed/xQ-3Quzriok"]
+        ];
+    }%
+    #{list 0..listReplay.size() - 1}
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingReplay${_}">
+                <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseReplay${_}" aria-expanded="false" aria-controls="collapseReplay${_}">
+                    ${listReplay[_][0]}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseReplay${_}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingReplay${_}">
+                <div class="panel-body">
+                    <iframe width="1280" height="800" src="${listReplay[_][1]}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    #{/list}
     <hr/>
 
     <h2>
@@ -107,4 +365,13 @@
     </ul>
 
 
+    <hr/>
+    Contact:
+    <a href="http://facebook.com/aha00a">
+        <img style="width: 16px; height: 16px; vertical-align: middle;" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xaf1/v/t1.0-1/c12.12.155.155/576889_449528545089056_951742509_n.jpg?oh=30c8be2776e4c1b051b84c63c4e118ab&oe=54EC28AE&__gda__=1425594912_c0022cd343e150b1199404c85e54fad0"/>
+        Aha00a
+    </a>
+
+
+</div>
 </div>

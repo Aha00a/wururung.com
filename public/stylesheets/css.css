@@ -1,11 +1,19 @@
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic&subset=latin,cyrillic-ext,greek-ext,greek,devanagari,vietnamese,latin-ext,cyrillic);
 
 @font-face {
-    font-family:'Clash Of Clans';src:url("/public/fonts/supercell-magic-webfont.eot");src:url("/public/fonts/supercell-magic-webfont.eot?#iefix") format("embedded-opentype"),url("/public/fonts/supercell-magic-webfont.woff") format("woff"),url("/public/fonts/supercell-magic-webfont.ttf") format("truetype"),url("/public/fonts/supercell-magic-webfont.svg#supercell-magicregular") format("svg");font-weight:normal;font-style:normal;
+    font-family: 'Clash Of Clans';
+    src: url("/public/fonts/supercell-magic-webfont.eot");
+    src: url("/public/fonts/supercell-magic-webfont.eot?#iefix") format("embedded-opentype"), url("/public/fonts/supercell-magic-webfont.woff") format("woff"), url("/public/fonts/supercell-magic-webfont.ttf") format("truetype"), url("/public/fonts/supercell-magic-webfont.svg#supercell-magicregular") format("svg");
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-    font-family:'Clash Of Clans';src:url("/public/fonts/supercell-magic-webfont.eot");src:url("/public/fonts/supercell-magic-webfont.eot?#iefix") format("embedded-opentype"),url("/public/fonts/supercell-magic-webfont.woff") format("woff"),url("/public/fonts/supercell-magic-webfont.ttf") format("truetype"),url("/public/fonts/supercell-magic-webfont.svg#supercell-magicregular") format("svg");font-weight:bold;font-style:normal;
+    font-family: 'Clash Of Clans';
+    src: url("/public/fonts/supercell-magic-webfont.eot");
+    src: url("/public/fonts/supercell-magic-webfont.eot?#iefix") format("embedded-opentype"), url("/public/fonts/supercell-magic-webfont.woff") format("woff"), url("/public/fonts/supercell-magic-webfont.ttf") format("truetype"), url("/public/fonts/supercell-magic-webfont.svg#supercell-magicregular") format("svg");
+    font-weight: bold;
+    font-style: normal;
 }
 
 
@@ -14,10 +22,9 @@ html, body {
     font-family: "Noto Sans", sans-serif;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, .coc {
     font-family: "Clash of Clans", "Noto Sans", sans-serif;
-    text-shadow: 0 4px 0 rgba(0,0,0,0.25);
-
+    text-shadow: 0 3px 0 rgba(0,0,0,0.25);
 }
 .Application.index {
     background: #000 url('http://supercell-www-content.s3-website-us-east-1.amazonaws.com/201401/cache/images/made/b136aec39c9210cd/CoC_titlescreen_2013_1440_727_c1.jpg') no-repeat fixed center center;
@@ -27,7 +34,13 @@ h1, h2, h3 {
     background-size: cover;
 }
 
-.Application.index .container {
-    background-color: rgba(240, 240, 240, 0.8);
+.Application.index .jumbotron {
+    
+    background-color: rgba(200, 200, 200, 0.90);
+    padding-top: 100px;
+    margin-bottom: 0px;
+}
+.Application.index .whiteAlpha{
+    background-color: rgba(255, 255, 255, 0.90);
 }
 

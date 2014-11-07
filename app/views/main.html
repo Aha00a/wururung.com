@@ -18,12 +18,14 @@
 
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/css.css'}">
         #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        *{<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">}*
+        <link rel="shortcut icon" href="http://img1.wikia.nocookie.net/__cb20140104204125/clashofclans/images/6/64/Favicon.ico">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="/public/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
 
-    #{get 'moreScripts' /}
+        #{get 'moreScripts' /}
+        #{get 'moreHead' /}
     </head>
     <body class="${request.controller} ${request.actionMethod}">
         #{doLayout /}
