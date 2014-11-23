@@ -1,7 +1,8 @@
 {
-    "arrayMember" : ["kig1945", "aha00a", "Kang Ill Goo", "AlanthePanda", "ReNeGaDe_", "kkoala", "세츠나", "silsol", "sinipapa", "독고클래쉬", "dontdry", "netro", "Ahn_air", "daypark", "Temeraire", "떼제비", "팜체크", "JunY", "aha00b", "_rEnE_"],
-    "arrayEnemy" : ["gettysburg", "tgrubb5", "mighty warrior", "Al18ex1888", "ZaZ187", "attaker", "Tomad", "Nadan", "chief cris", "blackhammer", "graytlo91", "ViditRoks", "elliot", "Alex23", "Jadin", "Cowboy", "wa y n gong", "xhx hassoun", "fariy", "ho"],
-    "arrayWarEvent" : [
+    "enemyClanName": "Chronicle",
+    "arrayMember": ["kig1945", "aha00a", "Kang Ill Goo", "AlanthePanda", "ReNeGaDe_", "kkoala", "세츠나", "silsol", "sinipapa", "독고클래쉬", "dontdry", "netro", "Ahn_air", "daypark", "Temeraire", "떼제비", "팜체크", "JunY", "aha00b", "_rEnE_"],
+    "arrayEnemy": ["gettysburg", "tgrubb5", "mighty warrior", "Al18ex1888", "ZaZ187", "attaker", "Tomad", "Nadan", "chief cris", "blackhammer", "graytlo91", "ViditRoks", "elliot", "Alex23", "Jadin", "Cowboy", "wa y n gong", "xhx hassoun", "fariy", "ho"],
+    "arrayWarEvent": [
         ["a", "aha00b", "fariy", 57, 1, 1],
         ["a", "silsol", "Nadan", 100, 3, 3],
         ["a", "Temeraire", "Jadin", 100, 3, 3],
