@@ -1,6 +1,6 @@
 {
     "enemyClanName": "Big Dawgz",
-    "summary": "전투 개시와 함께 쳐들어오는 적에 대해 긴장했으나, 상대방 뒷심 부족으로 승리.",
+    "summary": "전투 개시와 동시에 쳐들어오는 상대 클랜에 대해 긴장했으나, 상대 클랜의 뒷심 부족으로 승리.",
     "arrayMember": ["aha00a", "kig1945", "Kang Ill Goo", "AlanthePanda", "ReNeGaDe_", "세츠나", "kkoala", "silsol", "sinipapa", "netro", "독고클래쉬", "dontdry", "Ahn_air", "Temeraire", "daypark", "떼제비", "ung2", "JunY", "팜체크", "_rEnE_"],
     "arrayEnemy": ["Bo", "Rob", "bigsi", "jc", "mighty monty", "Roger", "Jesus", "jack", "SLIM SHADEY", "StereoBeatZ", "Fajar Adiyasa", "El Mayko", "HalflifeGames", "reb", "Takeoff", "king b", "Omar alrawy", "toad", "im So Awesome", "The Great One"],
     "arrayWarEvent": [
