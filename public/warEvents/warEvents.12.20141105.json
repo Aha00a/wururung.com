@@ -1,5 +1,6 @@
 {
     "enemyClanName": "Chronicle",
+    "summary": "참여율 100%, 별 획득 100%.<br/>오랜만의 클랜전이었으나, 상대방의 참여가 저조하여 퍼펙트 게임을 목표로 달린 전쟁.",
     "arrayMember": ["kig1945", "aha00a", "Kang Ill Goo", "AlanthePanda", "ReNeGaDe_", "kkoala", "세츠나", "silsol", "sinipapa", "독고클래쉬", "dontdry", "netro", "Ahn_air", "daypark", "Temeraire", "떼제비", "팜체크", "JunY", "aha00b", "_rEnE_"],
     "arrayEnemy": ["gettysburg", "tgrubb5", "mighty warrior", "Al18ex1888", "ZaZ187", "attaker", "Tomad", "Nadan", "chief cris", "blackhammer", "graytlo91", "ViditRoks", "elliot", "Alex23", "Jadin", "Cowboy", "wa y n gong", "xhx hassoun", "fariy", "ho"],
     "arrayWarEvent": [
@@ -47,5 +48,39 @@
         ["a", "aha00a", "mighty warrior", 100, 3, 1],
         ["a", "세츠나", "gettysburg", 37, 0, 0],
         ["a", "세츠나", "ViditRoks", 73, 2, 0]
+    ],
+    "mostHeroicAttack": {
+        "title": "Temeraire vs ZaZ187",
+        "url": "//www.youtube.com/embed/n9hLIN6Nn_0"
+    },
+    "mostHeroicDefense": {
+        "title": "ZaZ187 vs sinipapa",
+        "url": "//www.youtube.com/embed/nM9LY2cajcs"
+    },
+    "arrayFeaturedBattle": [
+        {
+            "title": "xhx hassoun vs silsol",
+            "url": "//www.youtube.com/embed/T9WVotT6Gdk"
+        },
+        {
+            "title": "sinipapa vs graytlo91",
+            "url": "//www.youtube.com/embed/UEHmYu3xVo8"
+        },
+        {
+            "title": "aha00a vs gettysburg",
+            "url": "//www.youtube.com/embed/eCmwfZ9jQh0"
+        },
+        {
+            "title": "aha00a vs mighty warrior",
+            "url": "//www.youtube.com/embed/h4oFpRKOWMI"
+        },
+        {
+            "title": "kig1945 vs Al18ex1888",
+            "url": "//www.youtube.com/embed/1Na4kB77Vcw"
+        },
+        {
+            "title": "Kang Ill Goo vs tgrubb5",
+            "url": "//www.youtube.com/embed/ssnwso4R7nc"
+        }
     ]
 }

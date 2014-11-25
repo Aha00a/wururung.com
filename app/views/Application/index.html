@@ -18,115 +18,193 @@
             }
         };
 
-        var $allVideos = $("iframe[src^='//www.youtube.com']"),
-        $fluidEl = $(".container");
-        $allVideos.each(function() {
-
-            $(this)
-                    .data('aspectRatio', this.height / this.width)
-
-                // and remove the hard coded width/height
-                    .removeAttr('height')
-                    .removeAttr('width');
-
-        });
-
         $(window).resize(function() {
-            $allVideos.each(function() {
-
+            $("iframe[src^='//www.youtube.com']").each(function() {
                 var $el = $(this);
                 var newWidth = $(this).parent().width();
-                $el
-                        .width(newWidth)
-                        .height(newWidth * $el.data('aspectRatio'));
-
+                $el.width(newWidth).height(newWidth * 800 / 1280);
             });
         }).resize();
 
-        $.get(
-                '/public/warEvents/warEvents.12.20141105.json',
-                {},
-                function (data, textStatus, jqXHR) {
-                    var dicMemberRank = {};
-                    height = 40;
-                    var svg = createSvg('svg');
-                    svg.attr({
-                        width: '100%',
-                        'preserveAspectRatio': "xMinYMin meet",
-                        'viewBox': "0 0 800 " + (data.arrayMember.length + 1) * height
-                    });
+        var arrayClanWarSummary = [
+            { nth: 13, date: "2014-11-16", starsGain: 50, starsLost: 34, urlJson: '/public/warEvents/warEvents.13.20141116.json', enemyClanName: 'Big Dawgz' },
+            { nth: 12, date: "2014-11-05", starsGain: 60, starsLost:  4, urlJson: '/public/warEvents/warEvents.12.20141105.json', enemyClanName: 'Chronicle' },
+            { nth: 11, date: "2014-10-20", starsGain: 64, starsLost: 59, urlJson: '', enemyClanName: "iran sky" },
+            { nth: 10, date: "2014-10-13", starsGain: 65, starsLost: 64, urlJson: '', enemyClanName: "Natsoe Empire" },
+            { nth:  9, date: "2014-10-06", starsGain: 62, starsLost: 64, urlJson: '', enemyClanName: "沙漠之狐" },
+            { nth:  8, date: "2014-09-29", starsGain: 72, starsLost: 26, urlJson: '', enemyClanName: "ZHUMABAI CLANS" },
+            { nth:  7, date: "2014-09-22", starsGain: 70, starsLost: 07, urlJson: '', enemyClanName: "Winston Rules" },
+            { nth:  6, date: "2014-09-15", starsGain: 55, starsLost: 25, urlJson: '', enemyClanName: "T1rd Burglers" },
+            { nth:  5, date: "2014-09-08", starsGain: 41, starsLost: 15, urlJson: '', enemyClanName: "SuperNova" },
+            { nth:  4, date: "2014-09-01", starsGain: 25, starsLost: 12, urlJson: '', enemyClanName: "湖里JW" },
+            { nth:  3, date: "2014-08-25", starsGain: 29, starsLost: 21, urlJson: '', enemyClanName: "clan Tu Do" },
+            { nth:  2, date: "2014-08-18", starsGain: 27, starsLost: 12, urlJson: '', enemyClanName: "TURK'S TEAM" },
+            { nth:  1, date: "2014-08-11", starsGain: -1, starsLost: -1, urlJson: '', enemyClanName: "???" },
+        ];
 
-
-                    for(var i = 0; i < data.arrayMember.length; i++) {
-                        dicMemberRank[data.arrayMember[i]] = i;
-                    }
-
-                    var dicEnemyRank = {};
-                    for(var i = 0; i < data.arrayEnemy.length; i++) {
-                        dicEnemyRank[data.arrayEnemy[i]] = i
-                    }
-
-                    $.each(data.arrayMember, function (index, value) {
-                        svg.append(createSvg("text").attr({
-                            'class': 'coc',
-                            x: 200,
-                            y: (index + 1) * height,
-                            fill: '#55f',
-                            'text-anchor': "end"
-                        }).text(value));
-                    });
-                    $.each(data.arrayEnemy, function (index, value) {
-                        svg.append(createSvg("text").attr({
-                            'class': 'coc',
-                            x: 600,
-                            y: (index + 1) * height,
-                            fill: '#f55',
-                            'text-anchor': "start"
-                        }).text(value));
-                    });
-                    $.each(data.arrayWarEvent, function (index, value) {
-                        svg.append(createSvg("line").addClass('coc').attr({
-                            'class': 'warLine' + index,
-                            x1: 230,
-                            x2: 570,
-                            y1: dicMemberRank[value[1]] * height + 35,
-                            y2: dicEnemyRank[value[2]] * height + 35
-                        }).css({
-                            stroke: value[0] == "a" ? "#00f" : "#f00",
-                            strokeWidth: (value[4] + 1) * 2,
-                            opacity: ((value[3] + 20) / 200)
-                        }));
-                    });
-                    $('.chartBipartite').append(svg);
-
-                    var until = 0;
-                    setInterval(function() {
-                        until++;
-                        if(until > 100)
-                            until = 0;
-
-                        for (var i = 0; i < 100; i++) {
-                            if (i < until) {
-                                $(".warLine" + i).show();
-                            }
-                            else {
-                                $(".warLine" + i).hide();
-                            }
-                        }
-                    }, 500);
+        $.each(arrayClanWarSummary, function (index, value) {
+            value.starsGainPercent = value.starsGain * 100 / (value.starsGain + value.starsLost);
+            value.starsLostPercent = value.starsLost * 100 / (value.starsGain + value.starsLost);
+            $('.expandableClanWarHistory').append(ich.templateClanWarSummary(value));
+        });
+        $(document).on("click", ".clanWarSummary .title", function(){
+            var $parent = $(this).parent();
+            var $content = $(".content", $parent);
+            if(!$content.html()) {
+                var dataUrl = $parent.attr('data-url');
+                if(!dataUrl)
+                {
+                    $content.html(ich.templateClanWarContentNotAvailable());
+                    return;
                 }
-        ).error(function (jqXHR, textStatue, httpStatus) {
-            alert(jqXHR.responseJSON.message);
+
+                $.get(
+                        dataUrl,
+                        {},
+                        function (data, textStatus, jqXHR) {
+                            var aaaaa = ich.templateClanWarContent(data);
+                            $content.append(aaaaa);
+
+                            height = 40;
+                            var svg = createSvg('svg');
+                            svg.attr({
+                                width: '100%',
+                                'preserveAspectRatio': "xMinYMin meet",
+                                'viewBox': "0 0 800 " + (data.arrayMember.length + 1) * height
+                            });
+
+
+                            var dicMemberRank = {};
+                            var dicEnemyRank = {};
+                            for(var i = 0; i < data.arrayMember.length; i++) { dicMemberRank[data.arrayMember[i]] = i; }
+                            for(var i = 0; i < data.arrayEnemy.length; i++) { dicEnemyRank[data.arrayEnemy[i]] = i }
+
+                            $.each(data.arrayMember, function (index, value) {
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc', x: 200, y: (index + 1) * height, fill: '#55f', 'text-anchor': "end"
+                                }).text(value));
+                            });
+                            $.each(data.arrayEnemy, function (index, value) {
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc', x: 600, y: (index + 1) * height, fill: '#f55', 'text-anchor': "start"
+                                }).text(value));
+                            });
+                            $.each(data.arrayWarEvent, function (index, value) {
+                                svg.append(createSvg("line").addClass('coc').attr({
+                                    'class': 'warLine' + index,
+                                    x1: 230, x2: 570,
+                                    y1: dicMemberRank[value[1]] * height + 35,
+                                    y2: dicEnemyRank[value[2]] * height + 35
+                                }).css({
+                                    stroke: value[0] == "a" ? "#00f" : "#f00",
+                                    strokeWidth: (value[4] + 1) * 2,
+                                    opacity: ((value[3] + 20) / 200)
+                                }));
+                            });
+                            $('.chartBipartite', $content).append(svg);
+                            $(window).resize();
+                            timer();
+                        }
+                ).error(function (jqXHR, textStatue, httpStatus) {
+                    alert(jqXHR.responseJSON.message);
+                });
+
+            } else {
+                $content.html('');
+            }
+            return false;
         });
 
+        $(".clanWarSummary .title").first().click();
+        setInterval(timer, 500);
 
     });
+
+    var until = 0;
+    function timer() {
+        until++;
+        if(until > 100)
+            until = 0;
+
+        for (var i = 0; i < 100; i++) {
+            if (i < until) {
+                $(".warLine" + i).show();
+            }
+            else {
+                $(".warLine" + i).hide();
+            }
+        }
+    }
 
     function createSvg(name) {
         return $(document.createElementNS("http://www.w3.org/2000/svg", name));
     }
 </script>
+<script type="text/html" id="templateClanWarSummary">
+    <div class="clanWarSummary" data-url="{{urlJson}}">
+        <div class="title" style="background: #eee; border: 1px solid #ccc; padding: 10px;">
+            <span class="coc">{{enemyClanName}}</span> - {{nth}}차전 {{date}}
+            <div class="progress" style="margin-bottom: 0px;">
+                <div class="coc progress-bar active progress-bar-striped" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{starsGainPercent}}%">
+                    {{starsGain}}
+                </div>
+                <div class="coc progress-bar active progress-bar-danger progress-bar-striped" style="width: {{starsLostPercent}}%">
+                    {{starsLost}}
+                </div>
+            </div>
 
+        </div>
+        <div class="content" data-url="{{dataJson}}" ></div>
+    </div>
+</script>
+<script type="text/html" id="templateClanWarContent">
+    <div style="background: #fff; border: 1px solid #ccc; padding: 20px;">
+        <h4 class="coc" style="text-align: center;">Summary</h4>
+        <div style="text-align: center">
+            {{{summary}}}
+        </div>
+        <h4 class="coc" style="text-align: center;">War Events</h4>
+        <p style="text-align: center;">
+            파란색은 공격, 붉은색은 방어, 굵기는 별 획득수, 투명도는 파괴율입니다.
+        </p>
+        <div class="chartBipartite"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="coc" style="text-align: center;">Most Heroic Attack</h4>
+                <h5 class="coc" style="text-align: center;">{{mostHeroicAttack.title}}</h5>
+                <iframe width="1280" height="800" src="{{mostHeroicAttack.url}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="col-md-12">
+                <h4 class="coc" style="text-align: center;">Most Heroic Defense</h4>
+                <h5 class="coc" style="text-align: center;">{{mostHeroicDefense.title}}</h5>
+                <iframe width="1280" height="800" src="{{mostHeroicDefense.url}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        {{#arrayFeaturedBattle.length}}
+        <div class="row">
+            <div style="height: 50px;"> </div>
+            <h4 class="coc" style="text-align: center;">Featured Battles</h4>
+            {{#arrayFeaturedBattle}}
+            <div class="col-md-6">
+                <h5 style="text-align: center;">{{title}}</h5>
+                <iframe width="1280" height="800" src="{{url}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            {{/arrayFeaturedBattle}}
+        </div>
+        {{/arrayFeaturedBattle.length}}
+    </div>
+</script>
+<script type="text/html" id="templateClanWarContentNotAvailable">
+    <div style="background: #fff; border: 1px solid #ccc; padding: 20px;">
+        Details not available.
+    </div>
+</script>
+<script type="text/html">
+    <div class="col-md-6">
+        <h5 style="text-align: center;">Kang Ill Goo vs tgrubb5</h5>
+        <iframe width="1280" height="800" src="//www.youtube.com/embed/ssnwso4R7nc" frameborder="0" allowfullscreen></iframe>
+    </div>
+</script>
 #{/set}
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -137,7 +215,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">wururung</a>
+            <a class="navbar-brand coc" href="#">wururung</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             *{<form class="navbar-form navbar-right" role="form">}*
@@ -153,11 +231,10 @@
     </div>
 </nav>
 
-
 <div class="jumbotron">
     <div class="container">
         <img src="http://supercell-www-content.s3.amazonaws.com/http://supercell-www-content.s3-website-us-east-1.amazonaws.com/201401/cache/images/made/b136aec39c9210cd/clash_of_clans_logo_600_270.png" style="height: 100px; float: right;"/>
-        <h2>wururung</h2>
+        <h2 class="coc">wururung</h2>
         <p>
             함께 즐긴 시간들의 기록입니다.
         </p>
@@ -169,7 +246,7 @@
     <div style="">
 
     </div>
-    <h3>Rules</h3>
+    <h3 class="coc">Rules</h3>
     <ul>
         <li>
             매달 5일, 15일, 25일 14시에 클랜전을 시작합니다.
@@ -179,7 +256,7 @@
         </li>
     </ul>
 
-    <h3>Build Order</h3>
+    <h3 class="coc">Build Order</h3>
     <ol>
         <li>새로 생긴 건물을 다 짓는다.(금광, 엘릭서 정제소는 선택)</li>
         <li>연구소(Laboratory) 풀업</li>
@@ -196,7 +273,7 @@
         <li>대부분의 업그레이드(벽포함)를 끝낸 후 타운홀을 올려야 합니다. 타운홀 레벨 차이에 따라 공격시 자원 획득률이 달라지게 되므로 업그레이드를 완료하지 않고 먼저 올리면 자원 수급이 원활하지 않아 가난해집니다.</li>
     </ol>
 
-    <h3>Clan Wars</h3>
+    <h3 class="coc">Clan Wars</h3>
     <ul>
         <li>새로 추가된 건물들이 있을 수 있으니 War Base를 꼭 점검해 주세요.</li>
         <li>War Map에서 Town Hall과 Clan Castle은 가장 안전한 위치에 두세요.</li>
@@ -208,113 +285,13 @@
         <li>드래곤은 다른 유닛과 섞는 것 보다 드래곤만 뽑아서 공격하는게 낫습니다.</li>
     </ul>
 
-    <h3>Clan War History</h3>
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <div class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        12차전(2014-11-05) - 勝(60:04) - Chronicle
-                    </a>
-                </div>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    <h4 style="text-align: center;">Summary</h4>
-                    <div style="text-align: center">
-                    참여율 100%, 별 획득 100%.<br/>
-                    오랜만의 클랜전이었으나, 상대방의 참여가 저조하여 퍼펙트 게임을 목표로 달린 전쟁. 
-                    </div>
-                    <h4 style="text-align: center;">War Events</h4>
-                    <p style="text-align: center;">
-                        파란색은 공격, 붉은색은 방어, 굵기는 별 획득수, 투명도는 파괴율입니다.
-                    </p>
+    <h3 class="coc">Clan War History</h3>
 
-                    <span id="scoreMember">
-                    </span>
+    <div class="expandableClanWarHistory">
 
-                    <span id="scoreEnemy">
-                    </span>
-                    <div class="chartBipartite"></div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4 style="text-align: center;">Most Heroic Attack</h4>
-                            <h5 style="text-align: center;">Temeraire vs ZaZ187</h5>
-
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/n9hLIN6Nn_0" frameborder="0" allowfullscreen></iframe>
-
-                        </div>
-                        <div class="col-md-12">
-                            <h4 style="text-align: center;">Most Heroic Defense</h4>
-                            <h5 style="text-align: center;">ZaZ187 vs sinipapa</h5>
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/nM9LY2cajcs" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div style="height: 50px;"> </div>
-                        <h4 style="text-align: center;">Featured Battles</h4>
-                        <div class="col-md-6">
-                            <h5 style="text-align: center;">xhx hassoun vs silsol</h5>
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/T9WVotT6Gdk" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 style="text-align: center;">sinipapa vs graytlo91</h5>
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/UEHmYu3xVo8" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 style="text-align: center;">aha00a vs gettysburg</h5>
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/eCmwfZ9jQh0" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 style="text-align: center;">aha00a vs mighty warrior</h5>
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/h4oFpRKOWMI" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 style="text-align: center;">kig1945 vs Al18ex1888</h5>
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/1Na4kB77Vcw" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 style="text-align: center;">Kang Ill Goo vs tgrubb5</h5>
-                            <iframe width="1280" height="800" src="//www.youtube.com/embed/ssnwso4R7nc" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        %{
-            def listHistory = [
-                "11차전(2014-10-20) - 勝(64:59) - iran sky",
-                "10차전(2014-10-13) - 勝(65:64) - Natsoe Empire",
-                "09차전(2014-10-06) - 敗(62:64) - 沙漠之狐",
-                "08차전(2014-09-29) - 勝(72:26) - ZHUMABAI CLANS",
-                "07차전(2014-09-22) - 勝(70:07) - Winston Rules",
-                "06차전(2014-09-15) - 勝(55:25) - T1rd Burglers",
-                "05차전(2014-09-08) - 勝(41:15) - SuperNova",
-                "04차전(2014-09-01) - 勝(25:12) - 湖里JW",
-                "03차전(2014-08-25) - 勝(29:21) - clan Tu Do",
-                "02차전(2014-08-18) - 勝(27:12) - TURK'S TEAM",
-                "01차전(2014-08-11) - 敗(??:??) - ???"
-            ];
-        }%
-        #{list 0..listHistory.size() - 1}
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="heading${_}">
-                    <div class="panel-title">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse${_}" aria-expanded="false" aria-controls="collapse${_}">
-                            ${listHistory[_]}
-                        </a>
-                    </div>
-                </div>
-                <div id="collapse${_}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${_}">
-                    <div class="panel-body">
-                        기록이 소실되었습니다.
-                    </div>
-                </div>
-            </div>
-        #{/list}
     </div>
 
-    <h3>Replay</h3>
+    <h3 class="coc">Replay</h3>
     %{
         def listReplay = [
             ["라바하운드 2", "//www.youtube.com/embed/2oYAj7tMFkQ"],
