@@ -142,13 +142,13 @@
 </script>
 <script type="text/html" id="templateClanWarSummary">
     <div class="clanWarSummary" data-url="{{urlJson}}">
-        <div class="title" style="background: #eee; border: 1px solid #ccc; padding: 10px;">
+        <div class="title" style="background: #eee; border: 1px solid #ccc; padding: 10px; cursor: pointer;">
             <span class="coc">{{enemyClanName}}</span> - {{nth}}차전 {{date}}
             <div class="progress" style="margin-bottom: 0px;">
-                <div class="coc progress-bar active progress-bar-striped" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{starsGainPercent}}%">
+                <div class="coc progress-bar progress-bar-striped" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{starsGainPercent}}%">
                     {{starsGain}}
                 </div>
-                <div class="coc progress-bar active progress-bar-danger progress-bar-striped" style="width: {{starsLostPercent}}%">
+                <div class="coc progress-bar progress-bar-danger progress-bar-striped" style="width: {{starsLostPercent}}%">
                     {{starsLost}}
                 </div>
             </div>
