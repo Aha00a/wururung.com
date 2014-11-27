@@ -27,6 +27,7 @@
         }).resize();
 
         var arrayClanWarSummary = [
+            { nth: 14, date: "2014-11-25", starsGain: 68, starsLost: 67, urlJson: '/public/warEvents/warEvents.14.20141125.json', enemyClanName: 'PASIG ELITE' },
             { nth: 13, date: "2014-11-16", starsGain: 50, starsLost: 34, urlJson: '/public/warEvents/warEvents.13.20141116.json', enemyClanName: 'Big Dawgz' },
             { nth: 12, date: "2014-11-05", starsGain: 60, starsLost:  4, urlJson: '/public/warEvents/warEvents.12.20141105.json', enemyClanName: 'Chronicle' },
             { nth: 11, date: "2014-10-20", starsGain: 64, starsLost: 59, urlJson: '', enemyClanName: "iran sky" },
@@ -126,7 +127,7 @@
         if(until > 100)
             until = 0;
 
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 200; i++) {
             if (i < until) {
                 $(".warLine" + i).show();
             }
@@ -186,7 +187,7 @@
             <h4 class="coc" style="text-align: center;">Featured Battles</h4>
             {{#arrayFeaturedBattle}}
             <div class="col-md-6">
-                <h5 style="text-align: center;">{{title}}</h5>
+                <h5 class="coc" style="text-align: center;">{{title}}</h5>
                 <iframe width="1280" height="800" src="{{url}}" frameborder="0" allowfullscreen></iframe>
             </div>
             {{/arrayFeaturedBattle}}
