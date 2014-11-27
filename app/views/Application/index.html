@@ -3,6 +3,9 @@
 
 #{set 'moreHead'}
 <script type="text/javascript">
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
 
     $(function() {
         $.attrHooks['preserveAspectRatio'] = {
@@ -27,7 +30,7 @@
         }).resize();
 
         var arrayClanWarSummary = [
-            { nth: 14, date: "2014-11-25", starsGain: 68, starsLost: 67, urlJson: '/public/warEvents/warEvents.14.20141125.json', enemyClanName: 'PASIG ELITE' },
+            { nth: 14, date: "2014-11-25", starsGain: 68, starsLost: 67, urlJson: '/public/warEvents/warEvents.14.20141125.json', enemyClanName: 'PASIG ELITE', enemyClanTag:'#9Y0YP09L' },
             { nth: 13, date: "2014-11-16", starsGain: 50, starsLost: 34, urlJson: '/public/warEvents/warEvents.13.20141116.json', enemyClanName: 'Big Dawgz' },
             { nth: 12, date: "2014-11-05", starsGain: 60, starsLost:  4, urlJson: '/public/warEvents/warEvents.12.20141105.json', enemyClanName: 'Chronicle' },
             { nth: 11, date: "2014-10-20", starsGain: 64, starsLost: 59, urlJson: '', enemyClanName: "iran sky" },
@@ -46,6 +49,22 @@
         $.each(arrayClanWarSummary, function (index, value) {
             value.starsGainPercent = value.starsGain * 100 / (value.starsGain + value.starsLost);
             value.starsLostPercent = value.starsLost * 100 / (value.starsGain + value.starsLost);
+            value.isVictory = value.starsGain > value.starsLost;
+            value.isDefeat = value.starsGain < value.starsLost;
+
+            var backgroundColor = "#eee";
+            if (value.starsGainPercent > 50) {
+//                99 -> #0e0 : 100 - 99 = 1
+//                51 -> #ded : 100 - 51 = 49
+                var colorBase = Math.floor((100 - value.starsGainPercent) * 100 / 50) + 140;
+                backgroundColor = rgbToHex(colorBase, 240, colorBase);
+            } else if (value.starsGainPercent < 50){
+                var colorBase = Math.floor((value.starsGainPercent) * 100 / 50) + 140;
+                backgroundColor = rgbToHex(240, colorBase, colorBase);
+            }
+
+            value.summaryBackgroundColor = backgroundColor; // value.isVictory ? "#efe" : value.isDefeat ? "#fee" : "#eee";
+
             $('.expandableClanWarHistory').append(ich.templateClanWarSummary(value));
         });
         $(document).on("click", ".clanWarSummary .title", function(){
@@ -143,7 +162,7 @@
 </script>
 <script type="text/html" id="templateClanWarSummary">
     <div class="clanWarSummary" data-url="{{urlJson}}">
-        <div class="title" style="background: #eee; border: 1px solid #ccc; padding: 10px; cursor: pointer;">
+        <div class="title" style="background: {{summaryBackgroundColor}}; border: 1px solid #ccc; padding: 10px; cursor: pointer;">
             <span class="coc">{{enemyClanName}}</span> - {{nth}}차전 {{date}}
             <div class="progress" style="margin-bottom: 0px;">
                 <div class="coc progress-bar progress-bar-striped" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{starsGainPercent}}%">
