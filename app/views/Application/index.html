@@ -135,6 +135,8 @@
             return false;
         });
 
+        $('.buildOrder a').attr('target', '_blank');
+
         $(".clanWarSummary .title").first().click();
         setInterval(timer, 500);
 
@@ -277,7 +279,7 @@
     </ul>
 
     <h3 class="coc">Build Order</h3>
-    <ol>
+    <ol class="buildOrder">
         <li><a href="http://clashofclans.wikia.com/wiki/Clan_Castle">클랜성(Clan Castle)</a>을 인구수 20이 될 때까지. 20이 되어야 <a href="http://clashofclans.wikia.com/wiki/Dragon">드래곤(Dragon)</a>을 드릴 수 있습니다. 그 이상은 선택입니다.</li>
         <li>새로 생긴 건물(<a href="http://clashofclans.wikia.com/wiki/Gold_Mine">금광(Gold Mine)</a>, <a href="http://clashofclans.wikia.com/wiki/Elixir_Collector">엘릭서 정제소(Elixir Collector)</a>는 선택)</li>
         <li><a href="http://clashofclans.wikia.com/wiki/Laboratory">연구소(Laboratory)</a> 풀업</li>
