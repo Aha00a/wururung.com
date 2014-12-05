@@ -56,10 +56,10 @@
             if (value.starsGainPercent > 50) {
 //                99 -> #0e0 : 100 - 99 = 1
 //                51 -> #ded : 100 - 51 = 49
-                var colorBase = Math.floor((100 - value.starsGainPercent) * 100 / 50) + 140;
+                var colorBase = Math.floor((100 - value.starsGainPercent) * 100 / 50) + 110;
                 backgroundColor = rgbToHex(colorBase, 240, colorBase);
             } else if (value.starsGainPercent < 50){
-                var colorBase = Math.floor((value.starsGainPercent) * 100 / 50) + 140;
+                var colorBase = Math.floor((value.starsGainPercent) * 100 / 50) + 110;
                 backgroundColor = rgbToHex(240, colorBase, colorBase);
             }
 
