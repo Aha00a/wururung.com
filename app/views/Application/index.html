@@ -104,18 +104,24 @@
 
                             $.each(data.arrayMember, function (index, value) {
                                 svg.append(createSvg("text").attr({
-                                    'class': 'coc', x: 200, y: (index + 1) * height, fill: '#55f', 'text-anchor': "end"
+                                    'class': 'coc name', x: 200, y: (index + 1) * height, fill: '#55f', 'text-anchor': "end"
                                 }).text(value));
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc countMember' + index, x: 210, y: (index + 1) * height, fill: '#555', 'text-anchor': "start"
+                                }).text(0));
                             });
                             $.each(data.arrayEnemy, function (index, value) {
                                 svg.append(createSvg("text").attr({
-                                    'class': 'coc', x: 600, y: (index + 1) * height, fill: '#f55', 'text-anchor': "start"
+                                    'class': 'coc name', x: 600, y: (index + 1) * height, fill: '#f55', 'text-anchor': "start"
                                 }).text(value));
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc countEnemy' + index, x: 590, y: (index + 1) * height, fill: '#555', 'text-anchor': "end"
+                                }).text(0));
                             });
                             $.each(data.arrayWarEvent, function (index, value) {
                                 svg.append(createSvg("line").addClass('coc').attr({
                                     'class': 'warLine' + index,
-                                    x1: 230, x2: 570,
+                                    x1: 240, x2: 560,
                                     y1: dicMemberRank[value[1]] * height + 35,
                                     y2: dicEnemyRank[value[2]] * height + 35
                                 }).css({
@@ -123,6 +129,13 @@
                                     strokeWidth: (value[4] + 1) * 2,
                                     opacity: ((value[3] + 20) / 200)
                                 }));
+                                if(value[0] == "a") {
+                                    var countEnemy = svg.find('.countEnemy' + dicEnemyRank[value[2]]);
+                                    countEnemy.text(parseInt(countEnemy.text()) + 1);
+                                } else {
+                                    var countMember = svg.find('.countMember' + dicMemberRank[value[1]]);
+                                    countMember.text(parseInt(countMember.text()) + 1);
+                                }
                             });
                             $('.chartBipartite', $content).append(svg);
                             $(window).resize();
@@ -191,6 +204,9 @@
         <h4 class="coc" style="text-align: center;">War Events</h4>
         <p style="text-align: center;">
             파란색은 공격, 붉은색은 방어, 굵기는 별 획득수, 투명도는 파괴율입니다.
+        </p>
+        <p style="text-align: center;">
+            닉네임 옆의 숫자는 공격받은 횟수입니다.
         </p>
         <div class="chartBipartite"></div>
         <div class="row">
