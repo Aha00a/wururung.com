@@ -30,6 +30,13 @@
         }).resize();
 
         var arrayClanWarSummary = [
+            { nth: 25, date: "2015-03-15", starsGain: 60, starsLost: 57, urlJson: '/public/warEvents/warEvents.25.20150315.json', enemyClanName: '傲视@群雄', enemyClanTag:'#2PLY22CV' },
+            { nth: 24, date: "2015-03-05", starsGain: 59, starsLost: 57, urlJson: '', enemyClanName: 'THE DARK LEGION', enemyClanTag:'#' },
+            { nth: 23, date: "2015-02-25", starsGain: 57, starsLost: 53, urlJson: '', enemyClanName: 'TOP SZN', enemyClanTag:'#' },
+            { nth: 22, date: "2015-02-15", starsGain: 59, starsLost: 46, urlJson: '', enemyClanName: 'FAM BAM', enemyClanTag:'#' },
+            { nth: 21, date: "2015-02-05", starsGain: 27, starsLost: 67, urlJson: '', enemyClanName: 'INDO BEST CLAN', enemyClanTag:'#' },
+            { nth: 20, date: "2015-01-25", starsGain: 61, starsLost: 54, urlJson: '', enemyClanName: 'YOUR BAD DREAM', enemyClanTag:'#' },
+            { nth: 19, date: "2015-01-15", starsGain: 59, starsLost: 69, urlJson: '', enemyClanName: 'TamBun HeBat', enemyClanTag:'#' },
             { nth: 18, date: "2015-01-05", starsGain: 66, starsLost: 64, urlJson: '/public/warEvents/warEvents.18.20150105.json', enemyClanName: 'Bakesi COC\' ers', enemyClanTag:'#2PV89QCG' },
             { nth: 17, date: "2014-12-25", starsGain: 69, starsLost: 66, urlJson: '/public/warEvents/warEvents.17.20141225.json', enemyClanName: 'borneo clan', enemyClanTag:'#8GLRVUVY' },
             { nth: 16, date: "2014-12-15", starsGain: 64, starsLost: 27, urlJson: '/public/warEvents/warEvents.16.20141215.json', enemyClanName: 'Bali Paradise', enemyClanTag:'#2G88GQCG' },
@@ -119,25 +126,49 @@
                                     'class': 'coc countEnemy' + index, x: 590, y: (index + 1) * height, fill: '#555', 'text-anchor': "end"
                                 }).text(0));
                             });
-                            $.each(data.arrayWarEvent, function (index, value) {
-                                svg.append(createSvg("line").addClass('coc').attr({
-                                    'class': 'warLine' + index,
-                                    x1: 240, x2: 560,
-                                    y1: dicMemberRank[value[1]] * height + 35,
-                                    y2: dicEnemyRank[value[2]] * height + 35
-                                }).css({
-                                    stroke: value[0] == "a" ? "#00f" : "#f00",
-                                    strokeWidth: (value[4] + 1) * 2,
-                                    opacity: ((value[3] + 20) / 200)
-                                }));
-                                if(value[0] == "a") {
-                                    var countEnemy = svg.find('.countEnemy' + dicEnemyRank[value[2]]);
-                                    countEnemy.text(parseInt(countEnemy.text()) + 1);
-                                } else {
-                                    var countMember = svg.find('.countMember' + dicMemberRank[value[1]]);
-                                    countMember.text(parseInt(countMember.text()) + 1);
-                                }
-                            });
+                            if(data.arrayWarEvent) {
+                                $.each(data.arrayWarEvent, function (index, value) {
+                                    svg.append(createSvg("line").addClass('coc').attr({
+                                        'class': 'warLine' + index,
+                                        x1: 240, x2: 560,
+                                        y1: dicMemberRank[value[1]] * height + 35,
+                                        y2: dicEnemyRank[value[2]] * height + 35
+                                    }).css({
+                                        stroke: value[0] == "a" ? "#00f" : "#f00",
+                                        strokeWidth: (value[4] + 1) * 2,
+                                        opacity: ((value[3] + 20) / 200)
+                                    }));
+                                    if(value[0] == "a") {
+                                        var countEnemy = svg.find('.countEnemy' + dicEnemyRank[value[2]]);
+                                        countEnemy.text(parseInt(countEnemy.text()) + 1);
+                                    } else {
+                                        var countMember = svg.find('.countMember' + dicMemberRank[value[1]]);
+                                        countMember.text(parseInt(countMember.text()) + 1);
+                                    }
+                                });
+                            }
+                            if(data.arrayWarEventRankReverse) {
+                                data.arrayWarEventRankReverse.reverse();
+                                $.each(data.arrayWarEventRankReverse, function (index, value) {
+                                    svg.append(createSvg("line").addClass('coc').attr({
+                                        'class': 'warLine' + index,
+                                        x1: 240, x2: 560,
+                                        y1: value[1] * height + 35,
+                                        y2: value[2] * height + 35
+                                    }).css({
+                                        stroke: value[0] == "a" ? "#00f" : "#f00",
+                                        strokeWidth: (value[4] + 1) * 2,
+                                        opacity: ((value[3] + 20) / 200)
+                                    }));
+                                    if(value[0] == "a") {
+                                        var countEnemy = svg.find('.countEnemy' + value[2]);
+                                        countEnemy.text(parseInt(countEnemy.text()) + 1);
+                                    } else {
+                                        var countMember = svg.find('.countMember' + value[1]);
+                                        countMember.text(parseInt(countMember.text()) + 1);
+                                    }
+                                });
+                            }
                             $('.chartBipartite', $content).append(svg);
                             $(window).resize();
                             timer();
@@ -289,9 +320,11 @@
 <div class="whiteAlpha">
 
 <div class="container" style="padding: 10px;">
-    <div style="">
+    <h3 class="coc">Facebook Group</h3>
+    <ul>
+        <li><a href="https://www.facebook.com/groups/wururung">http://facebook.com/groups/wururung</a></li>
+    </ul>
 
-    </div>
     <h3 class="coc">Rules</h3>
     <ul>
         <li>매달 5일, 15일, 25일 14시에 클랜전을 시작합니다.</li>
