@@ -34,8 +34,7 @@ html, body {
     background-size: cover;
 }
 
-.Application.index .jumbotron {
-    
+.Application .jumbotron {
     background-color: rgba(200, 200, 200, 0.90);
     padding-top: 100px;
     margin-bottom: 0px;
