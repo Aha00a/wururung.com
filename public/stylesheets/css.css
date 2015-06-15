@@ -27,7 +27,7 @@ html, body {
     text-shadow: 0 3px 0 rgba(0,0,0,0.25);
 }
 .Application.index {
-    background: #000 url('http://supercell-www-content.s3-website-us-east-1.amazonaws.com/201401/cache/images/made/b136aec39c9210cd/CoC_titlescreen_2013_1440_727_c1.jpg') no-repeat fixed center center;
+    background: #000 url('/public/images/CoC_titlescreen_2013_1440_727_c1.jpg') no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
