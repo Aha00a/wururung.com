@@ -19,16 +19,18 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="buildOrder">Build Order</a>
+                    <a href="@{buildOrder}">Build Order</a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Clan War <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="clanWarStrategy">Strategy</a></li>
-                        <li class="divider"></li>
-                        <li><a href="clanWarHistory">History</a></li>
-                    </ul>
-                </li>
+                <li><a href="@{clanWarStrategy}">Clan War Strategy</a></li>
+                <li><a href="@{clanWarHistory}">Clan War History</a></li>
+                *{<li class="dropdown">}*
+                    *{<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Clan War <span class="caret"></span></a>}*
+                    *{<ul class="dropdown-menu" role="menu">}*
+                        *{<li><a href="clanWarStrategy">Strategy</a></li>}*
+                        *{<li class="divider"></li>}*
+                        *{<li><a href="clanWarHistory">History</a></li>}*
+                    *{</ul>}*
+                *{</li>}*
             </ul>
             *{<form class="navbar-form navbar-right" role="form">}*
                 *{<div class="form-group">}*
@@ -53,7 +55,8 @@
     </div>
 </div>
 <div class="whiteAlpha">
-    #{doLayout /}
+    <div class="container" style="padding: 10px;">
+        #{doLayout /}
         <div class="container" style="padding: 10px;">
             <hr/>
             Contact:
@@ -62,4 +65,5 @@
                 Aha00a
             </a>
         </div>
+    </div>
 </div>

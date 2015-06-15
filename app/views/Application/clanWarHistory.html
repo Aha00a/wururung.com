@@ -1,0 +1,304 @@
+#{extends './_application.html' /}
+#{set title:'Home' /}
+
+#{set 'moreHead'}
+<script type="text/javascript">
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    $(function() {
+        $.attrHooks['preserveAspectRatio'] = {
+            set: function(elem, value, name) {
+                elem.setAttributeNS(null, 'preserveAspectRatio', value + '');
+                return value;
+            }
+        };
+        $.attrHooks['viewbox'] = {
+            set: function(elem, value, name) {
+                elem.setAttributeNS(null, 'viewBox', value + '');
+                return value;
+            }
+        };
+
+        $(window).resize(function() {
+            $("iframe[src^='//www.youtube.com']").each(function() {
+                var $el = $(this);
+                var newWidth = $(this).parent().width();
+                $el.width(newWidth).height(newWidth * 800 / 1280);
+            });
+        }).resize();
+
+        var arrayClanWarSummary = [
+            { nth: 36, date: "2015-05-05", starsGain: 24, starsLost: 21, urlJson: '', enemyClanName: 'cujos', enemyClanTag:'#' },
+            { nth: 35, date: "2015-05-03", starsGain: 24, starsLost: 19, urlJson: '', enemyClanName: 'Mogan', enemyClanTag:'#' },
+            { nth: 34, date: "2015-04-28", starsGain: 25, starsLost: 21, urlJson: '', enemyClanName: 'Banana Boat', enemyClanTag:'#' },
+            { nth: 33, date: "2015-04-22", starsGain: 23, starsLost: 26, urlJson: '', enemyClanName: 'Active Ternopil', enemyClanTag:'#' },
+            { nth: 32, date: "2015-04-19", starsGain: 30, starsLost: 26, urlJson: '', enemyClanName: 'ＤＩＡＢＬＥ', enemyClanTag:'#' },
+            { nth: 31, date: "2015-04-17", starsGain: 50, starsLost: 38, urlJson: '', enemyClanName: 'MdNt Assassinz', enemyClanTag:'#' },
+            { nth: 30, date: "2015-04-15", starsGain: 44, starsLost: 46, urlJson: '', enemyClanName: 'C.O.C. Lovers', enemyClanTag:'#' },
+            { nth: 29, date: "2015-04-12", starsGain: 24, starsLost: 17, urlJson: '', enemyClanName: '5TH CITY', enemyClanTag:'#' },
+            { nth: 28, date: "2015-04-09", starsGain: 28, starsLost:  2, urlJson: '', enemyClanName: 'Team Swole', enemyClanTag:'#' },
+            { nth: 27, date: "2015-04-05", starsGain: 51, starsLost: 69, urlJson: '', enemyClanName: '宮方一区', enemyClanTag:'#' },
+            { nth: 26, date: "2015-03-25", starsGain: 56, starsLost: 66, urlJson: '', enemyClanName: 'みんな友達', enemyClanTag:'#' },
+            { nth: 25, date: "2015-03-15", starsGain: 60, starsLost: 57, urlJson: '/public/warEvents/warEvents.25.20150315.json', enemyClanName: '傲视@群雄', enemyClanTag:'#2PLY22CV' },
+            { nth: 24, date: "2015-03-05", starsGain: 59, starsLost: 57, urlJson: '', enemyClanName: 'THE DARK LEGION', enemyClanTag:'#' },
+            { nth: 23, date: "2015-02-25", starsGain: 57, starsLost: 53, urlJson: '', enemyClanName: 'TOP SZN', enemyClanTag:'#' },
+            { nth: 22, date: "2015-02-15", starsGain: 59, starsLost: 46, urlJson: '', enemyClanName: 'FAM BAM', enemyClanTag:'#' },
+            { nth: 21, date: "2015-02-05", starsGain: 27, starsLost: 67, urlJson: '', enemyClanName: 'INDO BEST CLAN', enemyClanTag:'#' },
+            { nth: 20, date: "2015-01-25", starsGain: 61, starsLost: 54, urlJson: '', enemyClanName: 'YOUR BAD DREAM', enemyClanTag:'#' },
+            { nth: 19, date: "2015-01-15", starsGain: 59, starsLost: 69, urlJson: '', enemyClanName: 'TamBun HeBat', enemyClanTag:'#' },
+            { nth: 18, date: "2015-01-05", starsGain: 66, starsLost: 64, urlJson: '/public/warEvents/warEvents.18.20150105.json', enemyClanName: 'Bakesi COC\' ers', enemyClanTag:'#2PV89QCG' },
+            { nth: 17, date: "2014-12-25", starsGain: 69, starsLost: 66, urlJson: '/public/warEvents/warEvents.17.20141225.json', enemyClanName: 'borneo clan', enemyClanTag:'#8GLRVUVY' },
+            { nth: 16, date: "2014-12-15", starsGain: 64, starsLost: 27, urlJson: '/public/warEvents/warEvents.16.20141215.json', enemyClanName: 'Bali Paradise', enemyClanTag:'#2G88GQCG' },
+            { nth: 15, date: "2014-12-05", starsGain: 72, starsLost: 64, urlJson: '/public/warEvents/warEvents.15.20141205.json', enemyClanName: 'Pinoy DEA', enemyClanTag:'#2YYGP09QP' },
+            { nth: 14, date: "2014-11-25", starsGain: 68, starsLost: 67, urlJson: '/public/warEvents/warEvents.14.20141125.json', enemyClanName: 'PASIG ELITE', enemyClanTag:'#9Y0YP09L' },
+            { nth: 13, date: "2014-11-16", starsGain: 50, starsLost: 34, urlJson: '/public/warEvents/warEvents.13.20141116.json', enemyClanName: 'Big Dawgz' },
+            { nth: 12, date: "2014-11-05", starsGain: 60, starsLost:  4, urlJson: '/public/warEvents/warEvents.12.20141105.json', enemyClanName: 'Chronicle' },
+            { nth: 11, date: "2014-10-20", starsGain: 64, starsLost: 59, urlJson: '', enemyClanName: "iran sky" },
+            { nth: 10, date: "2014-10-13", starsGain: 65, starsLost: 64, urlJson: '', enemyClanName: "Natsoe Empire" },
+            { nth:  9, date: "2014-10-06", starsGain: 62, starsLost: 64, urlJson: '', enemyClanName: "沙漠之狐" },
+            { nth:  8, date: "2014-09-29", starsGain: 72, starsLost: 26, urlJson: '', enemyClanName: "ZHUMABAI CLANS" },
+            { nth:  7, date: "2014-09-22", starsGain: 70, starsLost: 07, urlJson: '', enemyClanName: "Winston Rules" },
+            { nth:  6, date: "2014-09-15", starsGain: 55, starsLost: 25, urlJson: '', enemyClanName: "T1rd Burglers" },
+            { nth:  5, date: "2014-09-08", starsGain: 41, starsLost: 15, urlJson: '', enemyClanName: "SuperNova" },
+            { nth:  4, date: "2014-09-01", starsGain: 25, starsLost: 12, urlJson: '', enemyClanName: "湖里JW" },
+            { nth:  3, date: "2014-08-25", starsGain: 29, starsLost: 21, urlJson: '', enemyClanName: "clan Tu Do" },
+            { nth:  2, date: "2014-08-18", starsGain: 27, starsLost: 12, urlJson: '', enemyClanName: "TURK'S TEAM" },
+            { nth:  1, date: "2014-08-11", starsGain: -1, starsLost: -1, urlJson: '', enemyClanName: "???" }
+        ];
+
+        $.each(arrayClanWarSummary, function (index, value) {
+            value.starsGainPercent = value.starsGain * 100 / (value.starsGain + value.starsLost);
+            value.starsLostPercent = value.starsLost * 100 / (value.starsGain + value.starsLost);
+            value.isVictory = value.starsGain > value.starsLost;
+            value.isDefeat = value.starsGain < value.starsLost;
+
+            var backgroundColor = "#eee";
+            if (value.starsGainPercent > 50) {
+//                99 -> #0e0 : 100 - 99 = 1
+//                51 -> #ded : 100 - 51 = 49
+                var colorBase = Math.floor((100 - value.starsGainPercent) * 100 / 50) + 110;
+                backgroundColor = rgbToHex(colorBase, 240, colorBase);
+            } else if (value.starsGainPercent < 50){
+                var colorBase = Math.floor((value.starsGainPercent) * 100 / 50) + 110;
+                backgroundColor = rgbToHex(240, colorBase, colorBase);
+            }
+
+            value.summaryBackgroundColor = backgroundColor; // value.isVictory ? "#efe" : value.isDefeat ? "#fee" : "#eee";
+
+            $('.expandableClanWarHistory').append(ich.templateClanWarSummary(value));
+        });
+        $(document).on("click", ".clanWarSummary .title", function(){
+            var $parent = $(this).parent();
+            var $content = $(".content", $parent);
+            if(!$content.html()) {
+                var dataUrl = $parent.attr('data-url');
+                if(!dataUrl)
+                {
+                    $content.html(ich.templateClanWarContentNotAvailable());
+                    return;
+                }
+
+                $.get(
+                        dataUrl,
+                        {},
+                        function (data, textStatus, jqXHR) {
+                            var aaaaa = ich.templateClanWarContent(data);
+                            $content.append(aaaaa);
+
+                            height = 40;
+                            var svg = createSvg('svg');
+                            svg.attr({
+                                width: '100%',
+                                'preserveAspectRatio': "xMinYMin meet",
+                                'viewBox': "0 0 800 " + (data.arrayMember.length + 1) * height
+                            });
+
+
+                            var dicMemberRank = {};
+                            var dicEnemyRank = {};
+                            for(var i = 0; i < data.arrayMember.length; i++) { dicMemberRank[data.arrayMember[i]] = i; }
+                            for(var i = 0; i < data.arrayEnemy.length; i++) { dicEnemyRank[data.arrayEnemy[i]] = i }
+
+                            $.each(data.arrayMember, function (index, value) {
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc name', x: 200, y: (index + 1) * height, fill: '#55f', 'text-anchor': "end"
+                                }).text(value));
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc countMember' + index, x: 210, y: (index + 1) * height, fill: '#555', 'text-anchor': "start"
+                                }).text(0));
+                            });
+                            $.each(data.arrayEnemy, function (index, value) {
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc name', x: 600, y: (index + 1) * height, fill: '#f55', 'text-anchor': "start"
+                                }).text(value));
+                                svg.append(createSvg("text").attr({
+                                    'class': 'coc countEnemy' + index, x: 590, y: (index + 1) * height, fill: '#555', 'text-anchor': "end"
+                                }).text(0));
+                            });
+                            if(data.arrayWarEvent) {
+                                $.each(data.arrayWarEvent, function (index, value) {
+                                    svg.append(createSvg("line").addClass('coc').attr({
+                                        'class': 'warLine' + index,
+                                        x1: 240, x2: 560,
+                                        y1: dicMemberRank[value[1]] * height + 35,
+                                        y2: dicEnemyRank[value[2]] * height + 35
+                                    }).css({
+                                        stroke: value[0] == "a" ? "#00f" : "#f00",
+                                        strokeWidth: (value[4] + 1) * 2,
+                                        opacity: ((value[3] + 20) / 200)
+                                    }));
+                                    if(value[0] == "a") {
+                                        var countEnemy = svg.find('.countEnemy' + dicEnemyRank[value[2]]);
+                                        countEnemy.text(parseInt(countEnemy.text()) + 1);
+                                    } else {
+                                        var countMember = svg.find('.countMember' + dicMemberRank[value[1]]);
+                                        countMember.text(parseInt(countMember.text()) + 1);
+                                    }
+                                });
+                            }
+                            if(data.arrayWarEventRankReverse) {
+                                data.arrayWarEventRankReverse.reverse();
+                                $.each(data.arrayWarEventRankReverse, function (index, value) {
+                                    svg.append(createSvg("line").addClass('coc').attr({
+                                        'class': 'warLine' + index,
+                                        x1: 240, x2: 560,
+                                        y1: (value[1] - 1) * height + 35,
+                                        y2: (value[2] - 1) * height + 35
+                                    }).css({
+                                        stroke: value[0] == "a" ? "#00f" : "#f00",
+                                        strokeWidth: (value[4] + 1) * 2,
+                                        opacity: ((value[3] + 20) / 200)
+                                    }));
+                                    if(value[0] == "a") {
+                                        var countEnemy = svg.find('.countEnemy' + (value[2] - 1));
+                                        countEnemy.text(parseInt(countEnemy.text()) + 1);
+                                    } else {
+                                        var countMember = svg.find('.countMember' + (value[1] - 1));
+                                        countMember.text(parseInt(countMember.text()) + 1);
+                                    }
+                                });
+                            }
+                            $('.chartBipartite', $content).append(svg);
+                            $(window).resize();
+                            timer();
+                        }
+                ).error(function (jqXHR, textStatue, httpStatus) {
+                    alert(jqXHR.responseJSON.message);
+                });
+
+            } else {
+                $content.html('');
+            }
+            return false;
+        });
+
+        $('.buildOrder a').attr('target', '_blank');
+
+        $(".clanWarSummary .title").first().click();
+        setInterval(timer, 1000);
+
+    });
+
+    var until = 0;
+    function timer() {
+        until++;
+        if(until > 100)
+            until = 0;
+
+        for (var i = 0; i < 200; i++) {
+            if (i < until) {
+                $(".warLine" + i).show();
+            }
+            else {
+                $(".warLine" + i).hide();
+            }
+        }
+    }
+
+    function createSvg(name) {
+        return $(document.createElementNS("http://www.w3.org/2000/svg", name));
+    }
+</script>
+<script type="text/html" id="templateClanWarSummary">
+    <div class="clanWarSummary" data-url="{{urlJson}}">
+        <div class="title" style="background: {{summaryBackgroundColor}}; border: 1px solid #ccc; padding: 10px; cursor: pointer;">
+            <span class="coc">{{enemyClanName}}</span> - {{nth}}차전 {{date}}
+            <div class="progress" style="margin-bottom: 0px;">
+                <div class="coc progress-bar progress-bar-striped" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{starsGainPercent}}%">
+                    {{starsGain}}
+                </div>
+                <div class="coc progress-bar progress-bar-danger progress-bar-striped" style="width: {{starsLostPercent}}%">
+                    {{starsLost}}
+                </div>
+            </div>
+
+        </div>
+        <div class="content" data-url="{{dataJson}}" ></div>
+    </div>
+</script>
+<script type="text/html" id="templateClanWarContent">
+    <div style="background: #fff; border: 1px solid #ccc; padding: 20px;">
+        <h4 class="coc" style="text-align: center;">Summary</h4>
+        <div style="text-align: center">
+            {{summary}}
+        </div>
+        <h4 class="coc" style="text-align: center;">War Events</h4>
+        <p style="text-align: center;">
+            파란색은 공격, 붉은색은 방어, 굵기는 별 획득수, 투명도는 파괴율입니다.
+        </p>
+        <p style="text-align: center;">
+            닉네임 옆의 숫자는 공격받은 횟수입니다.
+        </p>
+        <div class="chartBipartite"></div>
+        <div class="row">
+            {{#mostHeroicAttack}}
+                <div class="col-md-12">
+                    <h4 class="coc" style="text-align: center;">Most Heroic Attack</h4>
+                    <h5 class="coc" style="text-align: center;">{{mostHeroicAttack.title}}</h5>
+                    <iframe width="1280" height="800" src="{{mostHeroicAttack.url}}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            {{/mostHeroicAttack}}
+            {{#mostHeroicDefense}}
+                <div class="col-md-12">
+                    <h4 class="coc" style="text-align: center;">Most Heroic Defense</h4>
+                    <h5 class="coc" style="text-align: center;">{{mostHeroicDefense.title}}</h5>
+                    <iframe width="1280" height="800" src="{{mostHeroicDefense.url}}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            {{/mostHeroicDefense}}
+        </div>
+        {{#arrayFeaturedBattle.length}}
+        <div class="row">
+            <div style="height: 50px;"> </div>
+            <h4 class="coc" style="text-align: center;">Featured Battles</h4>
+            {{#arrayFeaturedBattle}}
+            <div class="col-md-6">
+                <h5 class="coc" style="text-align: center;">{{title}}</h5>
+                <iframe width="1280" height="800" src="{{url}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            {{/arrayFeaturedBattle}}
+        </div>
+        {{/arrayFeaturedBattle.length}}
+    </div>
+</script>
+<script type="text/html" id="templateClanWarContentNotAvailable">
+    <div style="background: #fff; border: 1px solid #ccc; padding: 20px;">
+        Details not available.
+    </div>
+</script>
+<script type="text/html">
+    <div class="col-md-6">
+        <h5 style="text-align: center;">Kang Ill Goo vs tgrubb5</h5>
+        <iframe width="1280" height="800" src="//www.youtube.com/embed/ssnwso4R7nc" frameborder="0" allowfullscreen></iframe>
+    </div>
+</script>
+#{/set}
+
+<div class="container" style="padding: 10px;">
+    <h3 class="coc">Clan War History</h3>
+
+    <div class="expandableClanWarHistory">
+
+    </div>
+</div>

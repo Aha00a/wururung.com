@@ -12,4 +12,12 @@ public class Application extends Controller {
         render();
     }
 
+    public static void clanWarStrategy() {
+        render();
+    }
+
+    public static void clanWarHistory() {
+        render();
+    }
+
 }
