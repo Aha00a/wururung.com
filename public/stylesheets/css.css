@@ -37,7 +37,7 @@ html, body {
 .Application .jumbotron {
     background-color: rgba(200, 200, 200, 0.90);
     padding-top: 100px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .Application .whiteAlpha{
     background-color: rgba(255, 255, 255, 0.90);
